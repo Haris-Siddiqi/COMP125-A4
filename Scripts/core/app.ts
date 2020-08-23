@@ -274,6 +274,7 @@
         spinButton.on("click", ()=>{
             // reset
             resetFruitTally();
+            winnings = 0;
 
             // reel test
             let reels = Reels();
@@ -284,13 +285,10 @@
             rightReel.image = assets.getResult(reels[2]) as HTMLImageElement;
 
             // Caluclate winnings
-            console.log(winnings);
-            console.log(credits);
             determineWinnings();
 
             // Calculations
-            credits = credits - bet;
-            credits = credits + winnings;
+            credits = credits - bet + winnings;
 
             // Update gui
             stage.removeChild(creditLabel);
@@ -304,19 +302,43 @@
         });
 
         bet1Button.on("click", ()=>{
-            console.log("bet1Button Button Clicked");
+            // Update bet value
+            bet = 1;
+
+            // Update label
+            stage.removeChild(betLabel);
+            betLabel = new UIObjects.Label(bet.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 108, true);
+            stage.addChild(betLabel);
         });
 
         bet10Button.on("click", ()=>{
-            console.log("bet10Button Button Clicked");
+            // Update bet value
+            bet = 10;
+
+            // Update label
+            stage.removeChild(betLabel);
+            betLabel = new UIObjects.Label(bet.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 108, true);
+            stage.addChild(betLabel);
         });
 
         bet100Button.on("click", ()=>{
-            console.log("bet100Button Button Clicked");
+            // Update bet value
+            bet = 100;
+
+            // Update label
+            stage.removeChild(betLabel);
+            betLabel = new UIObjects.Label(bet.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 108, true);
+            stage.addChild(betLabel);
         });
 
         betMaxButton.on("click", ()=>{
-            console.log("betMaxButton Button Clicked");
+            // Update bet value
+            bet = credits;
+
+            // Update label
+            stage.removeChild(betLabel);
+            betLabel = new UIObjects.Label(bet.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 108, true);
+            stage.addChild(betLabel);
         });
     }
 
