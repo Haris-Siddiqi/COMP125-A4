@@ -191,6 +191,7 @@
         sevens = 0;
         blanks = 0;
     }
+    // Initial build
     function buildInterface() {
         // Slot Machine Background
         slotMachineBackground = new Core.GameObject("background", Config.Screen.CENTER_X, Config.Screen.CENTER_Y, true);
@@ -230,28 +231,65 @@
         betLine = new Core.GameObject("bet_line", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 12, true);
         stage.addChild(betLine);
     }
+    // App logic
     function interfaceLogic() {
         spinButton.on("click", () => {
-            // reset
-            resetFruitTally();
-            winnings = 0;
-            // reel test
-            let reels = Reels();
-            // example of how to replace the images in the reels
-            leftReel.image = assets.getResult(reels[0]);
-            middleReel.image = assets.getResult(reels[1]);
-            rightReel.image = assets.getResult(reels[2]);
-            // Caluclate winnings
-            determineWinnings();
-            // Calculations
-            credits = credits - bet + winnings;
-            // Update gui
-            stage.removeChild(creditLabel);
-            stage.removeChild(winningsLabel);
-            creditLabel = new UIObjects.Label(credits.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X - 94, Config.Screen.CENTER_Y + 108, true);
-            stage.addChild(creditLabel);
-            winningsLabel = new UIObjects.Label(winnings.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 94, Config.Screen.CENTER_Y + 108, true);
-            stage.addChild(winningsLabel);
+            if (credits == 0) {
+                if (confirm("You ran out of Money! \nDo you want to play again?")) {
+                    // reset
+                    resetFruitTally();
+                    credits = 1000;
+                    winnings = 0;
+                    bet = 10;
+                    // reset bet label
+                    stage.removeChild(betLabel);
+                    betLabel = new UIObjects.Label(bet.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 108, true);
+                    stage.addChild(betLabel);
+                    // reset credit label
+                    stage.removeChild(creditLabel);
+                    creditLabel = new UIObjects.Label(credits.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X - 94, Config.Screen.CENTER_Y + 108, true);
+                    stage.addChild(creditLabel);
+                    // reset winnings label
+                    stage.removeChild(winningsLabel);
+                    winningsLabel = new UIObjects.Label(winnings.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 94, Config.Screen.CENTER_Y + 108, true);
+                    stage.addChild(winningsLabel);
+                    // reset reel GameObjects
+                    stage.removeChild(leftReel);
+                    stage.removeChild(middleReel);
+                    stage.removeChild(rightReel);
+                    leftReel = new Core.GameObject("bell", Config.Screen.CENTER_X - 79, Config.Screen.CENTER_Y - 12, true);
+                    stage.addChild(leftReel);
+                    middleReel = new Core.GameObject("banana", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 12, true);
+                    stage.addChild(middleReel);
+                    rightReel = new Core.GameObject("bar", Config.Screen.CENTER_X + 78, Config.Screen.CENTER_Y - 12, true);
+                    stage.addChild(rightReel);
+                }
+            }
+            else if (bet > credits) {
+                alert("You don't have enough Money to place that bet.");
+            }
+            else {
+                // reset
+                resetFruitTally();
+                winnings = 0;
+                // reel test
+                let reels = Reels();
+                // example of how to replace the images in the reels
+                leftReel.image = assets.getResult(reels[0]);
+                middleReel.image = assets.getResult(reels[1]);
+                rightReel.image = assets.getResult(reels[2]);
+                // Caluclate winnings
+                determineWinnings();
+                // Calculations
+                credits = credits - bet + winnings;
+                // Update gui
+                stage.removeChild(creditLabel);
+                stage.removeChild(winningsLabel);
+                creditLabel = new UIObjects.Label(credits.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X - 94, Config.Screen.CENTER_Y + 108, true);
+                stage.addChild(creditLabel);
+                winningsLabel = new UIObjects.Label(winnings.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 94, Config.Screen.CENTER_Y + 108, true);
+                stage.addChild(winningsLabel);
+            }
         });
         bet1Button.on("click", () => {
             // Update bet value
@@ -285,8 +323,40 @@
             betLabel = new UIObjects.Label(bet.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 108, true);
             stage.addChild(betLabel);
         });
+        resetButton.on("click", () => {
+            // reset
+            resetFruitTally();
+            credits = 1000;
+            winnings = 0;
+            bet = 10;
+            // reset bet label
+            stage.removeChild(betLabel);
+            betLabel = new UIObjects.Label(bet.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 108, true);
+            stage.addChild(betLabel);
+            // reset credit label
+            stage.removeChild(creditLabel);
+            creditLabel = new UIObjects.Label(credits.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X - 94, Config.Screen.CENTER_Y + 108, true);
+            stage.addChild(creditLabel);
+            // reset winnings label
+            stage.removeChild(winningsLabel);
+            winningsLabel = new UIObjects.Label(winnings.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 94, Config.Screen.CENTER_Y + 108, true);
+            stage.addChild(winningsLabel);
+            // reset reel GameObjects
+            stage.removeChild(leftReel);
+            stage.removeChild(middleReel);
+            stage.removeChild(rightReel);
+            leftReel = new Core.GameObject("bell", Config.Screen.CENTER_X - 79, Config.Screen.CENTER_Y - 12, true);
+            stage.addChild(leftReel);
+            middleReel = new Core.GameObject("banana", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 12, true);
+            stage.addChild(middleReel);
+            rightReel = new Core.GameObject("bar", Config.Screen.CENTER_X + 78, Config.Screen.CENTER_Y - 12, true);
+            stage.addChild(rightReel);
+        });
+        exitButton.on("click", () => {
+            // exit
+            window.close();
+        });
     }
-    // app logic goes here
     function Main() {
         buildInterface();
         interfaceLogic();
