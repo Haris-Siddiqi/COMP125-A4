@@ -1,3 +1,11 @@
+/*
+Filename: app.ts
+Author: Haris Siddiqi
+Student #: 301126020
+Project: Slot Machine
+Description: Slot machine game with a jackpot of 5000 (1 in 1000 odds)
+*/
+
 (function(){
     // Function scoped Variables
     let stage: createjs.Stage;
