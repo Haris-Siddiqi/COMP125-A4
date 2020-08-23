@@ -19,12 +19,13 @@
     let rightReel: Core.GameObject;
     let betLine: Core.GameObject;
 
-    // symbol tallies
+    // variables
     let jackpot = 5000;
     let credits = 1000;
     let bet = 10;
     let winnings = 0;
 
+    // symbol tallies
     let grapes = 0;
     let bananas = 0;
     let oranges = 0;
@@ -150,62 +151,58 @@
         if (blanks == 0)
         {
             if (grapes == 3) {
-                winnings = playerBet * 10;
+                winnings = bet * 10;
             }
             else if(bananas == 3) {
-                winnings = playerBet * 20;
+                winnings = bet * 20;
             }
             else if (oranges == 3) {
-                winnings = playerBet * 30;
+                winnings = bet * 30;
             }
             else if (cherries == 3) {
-                winnings = playerBet * 40;
+                winnings = bet * 40;
             }
             else if (bars == 3) {
-                winnings = playerBet * 50;
+                winnings = bet * 50;
             }
             else if (bells == 3) {
-                winnings = playerBet * 75;
+                winnings = bet * 75;
             }
             else if (sevens == 3) {
-                winnings = playerBet * 100;
+                winnings = bet * 100;
             }
             else if (grapes == 2) {
-                winnings = playerBet * 2;
+                winnings = bet * 2;
             }
             else if (bananas == 2) {
-                winnings = playerBet * 2;
+                winnings = bet * 2;
             }
             else if (oranges == 2) {
-                winnings = playerBet * 3;
+                winnings = bet * 3;
             }
             else if (cherries == 2) {
-                winnings = playerBet * 4;
+                winnings = bet * 4;
             }
             else if (bars == 2) {
-                winnings = playerBet * 5;
+                winnings = bet * 5;
             }
             else if (bells == 2) {
-                winnings = playerBet * 10;
+                winnings = bet * 10;
             }
             else if (sevens == 2) {
-                winnings = playerBet * 20;
+                winnings = bet * 20;
             }
             else if (sevens == 1) {
-                winnings = playerBet * 5;
+                winnings = bet * 5;
             }
             else {
-                winnings = playerBet * 1;
+                winnings = bet * 1;
             }
-            winNumber++;
-            showWinMessage();
         }
-        else
+        else ()
         {
-            lossNumber++;
-            showLossMessage();
+            winnings = 0;
         }
-        
     }
 
     function buildInterface():void
@@ -275,6 +272,23 @@
             leftReel.image = assets.getResult(reels[0]) as HTMLImageElement;
             middleReel.image = assets.getResult(reels[1]) as HTMLImageElement;
             rightReel.image = assets.getResult(reels[2]) as HTMLImageElement;
+
+            // Caluclate winnings
+            determineWinnings();
+
+            // Calculations
+            credits = credits - bet;
+            credits = credits + winnings;
+
+            // Update gui
+            stage.removeChild(creditLabel);
+            stage.removeChild(winningsLabel);
+
+            creditLabel = new UIObjects.Label(credits.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X - 94, Config.Screen.CENTER_Y + 108, true);
+            stage.addChild(creditLabel);
+
+            winningsLabel = new UIObjects.Label(winnings.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 94, Config.Screen.CENTER_Y + 108, true);
+            stage.addChild(winningsLabel);
         });
 
         bet1Button.on("click", ()=>{
