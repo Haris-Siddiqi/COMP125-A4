@@ -148,7 +148,20 @@
     /* This function calculates the player's winnings, if any */
     function determineWinnings()
     {
-        if (blanks == 0)
+        // Generate random values for jackpot
+        let jackPotTry = Math.floor(Math.random() * 1000);
+        let jackPotWin = Math.floor(Math.random() * 1000);
+        console.log(jackPotWin);
+        console.log(jackPotTry);
+
+        // If jackpot won
+        if (jackPotTry == jackPotWin)
+        {
+            alert("You Won the $" + jackpot + " Jackpot!!");
+            winnings = jackpot;
+        }
+        // Normal situation
+        else if(blanks == 0)
         {
             if (grapes == 3) {
                 winnings = bet * 10;
