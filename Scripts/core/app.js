@@ -179,10 +179,17 @@
                 winnings = bet * 1;
             }
         }
-        else
-            () => {
-                winnings = 0;
-            };
+    }
+    /* Utility function to reset all fruit tallies */
+    function resetFruitTally() {
+        grapes = 0;
+        bananas = 0;
+        oranges = 0;
+        cherries = 0;
+        bars = 0;
+        bells = 0;
+        sevens = 0;
+        blanks = 0;
     }
     function buildInterface() {
         // Slot Machine Background
@@ -225,6 +232,8 @@
     }
     function interfaceLogic() {
         spinButton.on("click", () => {
+            // reset
+            resetFruitTally();
             // reel test
             let reels = Reels();
             // example of how to replace the images in the reels
@@ -232,6 +241,8 @@
             middleReel.image = assets.getResult(reels[1]);
             rightReel.image = assets.getResult(reels[2]);
             // Caluclate winnings
+            console.log(winnings);
+            console.log(credits);
             determineWinnings();
             // Calculations
             credits = credits - bet;

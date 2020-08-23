@@ -199,10 +199,18 @@
                 winnings = bet * 1;
             }
         }
-        else ()
-        {
-            winnings = 0;
-        }
+    }
+
+    /* Utility function to reset all fruit tallies */
+    function resetFruitTally() {
+        grapes = 0;
+        bananas = 0;
+        oranges = 0;
+        cherries = 0;
+        bars = 0;
+        bells = 0;
+        sevens = 0;
+        blanks = 0;
     }
 
     function buildInterface():void
@@ -264,6 +272,8 @@
     function interfaceLogic():void
     {
         spinButton.on("click", ()=>{
+            // reset
+            resetFruitTally();
 
             // reel test
             let reels = Reels();
@@ -274,6 +284,8 @@
             rightReel.image = assets.getResult(reels[2]) as HTMLImageElement;
 
             // Caluclate winnings
+            console.log(winnings);
+            console.log(credits);
             determineWinnings();
 
             // Calculations
@@ -314,7 +326,6 @@
         buildInterface();
 
         interfaceLogic();
-       
     }
 
     window.addEventListener("load", Preload);
