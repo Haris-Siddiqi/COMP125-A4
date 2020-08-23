@@ -151,8 +151,6 @@
         // Generate random values for jackpot
         let jackPotTry = Math.floor(Math.random() * 1000);
         let jackPotWin = Math.floor(Math.random() * 1000);
-        console.log(jackPotWin);
-        console.log(jackPotTry);
 
         // If jackpot won
         if (jackPotTry == jackPotWin)
