@@ -29,5 +29,9 @@ module UIObjects
         }
 
         // PUBLIC METHOD(S)
+        public grey():void
+        {
+            this.alpha = 0.7; // 70% opaque - 30% transparent
+        }
     }
 }

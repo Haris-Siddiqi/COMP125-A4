@@ -17,6 +17,10 @@ var UIObjects;
         m_mouseOut() {
             this.alpha = 1.0; // 100% opaque - 0% transparent
         }
+        // PUBLIC METHOD(S)
+        grey() {
+            this.alpha = 0.7; // 70% opaque - 30% transparent
+        }
     }
     UIObjects.Button = Button;
 })(UIObjects || (UIObjects = {}));
